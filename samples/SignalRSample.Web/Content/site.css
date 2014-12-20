@@ -1,0 +1,42 @@
+﻿h1 {
+    font-weight: normal;
+}
+
+.navbar-inverse .navbar-inner {
+    background: #262D64 url("bg-body.jpg") no-repeat scroll center -12px;
+}
+
+.navbar-inverse .brand, .navbar-inverse .nav > li > a {
+    color: #fff;
+}
+
+.navbar-inverse .nav > li.active > a {
+    background-color: rgba(0, 0, 0, 0.30);
+}
+
+    .navbar-inverse .nav > li.active > a:hover {
+        background-color: rgba(0, 0, 0, 0.45);
+    }
+
+.navbar-inverse .nav > li > a:hover {
+    background-color: rgba(0, 0, 0, 0.20);
+}
+
+.navbar-inverse .brand {
+    background: url("sprite-ui.png") no-repeat scroll 0 0 transparent;
+    display: block;
+    float: left;
+    text-indent: -999em;
+    height: 44px;
+    width: 153px;
+    margin: 8px 16px 8px 0;
+    padding: 0;
+}
+
+.navbar .nav {
+    margin-top: 20px;
+}
+
+.dl-expanded dt {
+    margin-top: 1em;
+}

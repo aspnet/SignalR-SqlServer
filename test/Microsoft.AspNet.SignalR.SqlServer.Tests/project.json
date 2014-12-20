@@ -1,0 +1,17 @@
+{
+    "dependencies": {
+        "SignalRSample.Web": "1.0.0",
+        "Microsoft.AspNet.SignalR.Server": "3.0.0-*",
+        "Xunit.KRunner": "1.0.0-*",
+        "Moq": "4.2.1312.1622"
+    },
+    "compilationOptions": {
+        "allowUnsafe": true
+    },
+    "frameworks": {
+        "aspnet50": { }
+    },
+    "commands": {
+        "test": "Xunit.KRunner"
+    }
+}

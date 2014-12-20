@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>ASP.NET SignalR</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/bootstrap-responsive.css" rel="stylesheet" />
+    <link href="/Content/site.css" rel="stylesheet" />
+    <style>
+        body {
+            padding-top: 80px;
+            padding-bottom: 40px;
+            padding-left: 10px;
+        }
+    </style>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="/">ASP.NET SignalR</a>
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        <li class="active"><a href="/">Samples</a></li>
+                        <li><a href="https://github.com/signalr/signalr">Source Code</a></li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+        </div>
+    </div>
+
+    <ul class="breadcrumb">
+        <li><a href="/">SignalR Samples</a> <span class="divider">/</span></li>
+        <li class="active">Demo Hub</li>
+    </ul>
+
+    <div class="page-header">
+        <h2>Demo Hub</h2>
+        <p>A contrived example that exploits every feature of the Hub API.</p>
+    </div>
+
+    <dl class="dl-expanded">
+        <dt>Arbitrary Code</dt>
+        <dd id="arbitraryCode"></dd>
+
+        <dt>Report Progress</dt>
+        <dd id="progress">
+            <span>not started</span>
+            <div class="progress" style="width: 300px">
+                <div class="bar" style="width: 0"></div>
+            </div>
+        </dd>
+
+        <dt>Group Added</dt>
+        <dd id="groupAdded"></dd>
+
+        <dt>Generic Task</dt>
+        <dd id="value"></dd>
+
+        <dt>Task With Exception</dt>
+        <dd id="taskWithException"></dd>
+
+        <dt>Generic Task With Exception</dt>
+        <dd id="genericTaskWithException"></dd>
+
+        <dt>Synchronous Exception</dt>
+        <dd id="synchronousException"></dd>
+
+        <dt>Dynamic Task</dt>
+        <dd id="dynamicTask"></dd>
+
+        <dt>Invoking hub method with dynamic</dt>
+        <dd id="passingDynamicComplex"></dd>
+
+        <dt>SimpleArray</dt>
+        <dd id="simpleArray"></dd>
+
+        <dt>ComplexType</dt>
+        <dd id="complexType"></dd>
+
+        <dt>ComplexArray</dt>
+        <dd id="complexArray"></dd>
+
+        <dt>Overloads</dt>
+        <dd id="overloads"></dd>
+
+        <dt>Read State Value</dt>
+        <dd id="readStateValue"></dd>
+
+        <dt>Read VB.NET State Value</dt>
+        <dd id="readVBStateValue"></dd>
+
+        <dt>Inline Script Tag</dt>
+        <dd id="inlineScriptTag"></dd>
+
+        <dt>Plain Task</dt>
+        <dd id="plainTask"></dd>
+
+        <dt>Generic Task With ContinueWith</dt>
+        <dd id="genericTaskWithContinueWith"></dd>
+
+        <dt>Typed callback</dt>
+        <dd id="typed"></dd>
+
+        <dt>Message Pump</dt>
+        <dd id="msg"></dd>
+    </dl>
+
+    <script src="/Scripts/jquery-1.8.2.js"></script>
+    <script src="/Scripts/bootstrap.js"></script>
+    <script src="/Scripts/signalr.samples.js"></script>
+    <script src="/Scripts/json2.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.0.3.js"></script>
+    <script src="/Scripts/jquery.cookie.js"></script>
+    <script src="/signalr/js"></script>
+    <script>
+        var options = { transport: activeTransport };
+    </script>
+    <script src="DemoHub.js"></script>
+</body>
+</html>

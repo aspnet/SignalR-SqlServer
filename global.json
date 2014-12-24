@@ -1,0 +1,3 @@
+{
+    "sources": [ "samples", "src", "test", "../../SignalR-Server/SignalR-Server/src", "../../Options/Options/src" ]
+}

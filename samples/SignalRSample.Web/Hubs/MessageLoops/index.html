@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>ASP.NET SignalR</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/bootstrap-responsive.css" rel="stylesheet" />
+    <link href="/Content/site.css" rel="stylesheet" />
+    <style>
+        body {
+            padding-top: 80px;
+            padding-bottom: 40px;
+            padding-left: 10px;
+        }
+    </style>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="/">ASP.NET SignalR</a>
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        <li class="active"><a href="/">Samples</a></li>
+                        <li><a href="https://github.com/signalr/signalr">Source Code</a></li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+        </div>
+    </div>
+
+    <ul class="breadcrumb">
+        <li><a href="/">SignalR Samples</a> <span class="divider">/</span></li>
+        <li class="active">Connection API</li>
+    </ul>
+
+    <div class="page-header">
+        <h2>Message Loops </h2>
+        <p>Demonstrates message loops where client calls the server method to broadcast message after the client successfully calls the server method once start, and shows missing and dup messages if happens.</p>
+    </div>
+
+    <p>
+        <input type="radio" id="radioAll" name="group1" value="all" checked="checked">
+        Send message to all<br>
+        <input type="radio" id="radioGroup" name="group1" value="group">
+        Send message to group<br>
+        <input type="radio" id="radioCaller" name="group1" value="value">
+        Send message to caller<br>
+    </p>
+
+    <p>
+        <input type="button" id="startMessageLoops" class="btn" value="Start Message Loops" />
+        send each message in
+        <input type="text" id="sleep" value="5000" style="width: 40px;" />milliseconds
+    </p>
+
+    <p>
+        <button id="stopStart" class="btn" disabled="disabled"><span>Stop Connection</span></button>
+    </p>
+
+    <h5>Messages: </h5>
+    <div id="messageLoops">
+    </div>
+    <label id="missingMessagesCount">
+    </label>
+
+    <ul id="messages"></ul>
+
+    <script src="/Scripts/jquery-1.8.2.js"></script>
+    <script src="/Scripts/bootstrap.js"></script>
+    <script src="/Scripts/signalr.samples.js"></script>
+    <script src="/Scripts/json2.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.0.3.js"></script>
+    <script src="/Scripts/jquery.cookie.js"></script>
+    <script src="/signalr/js"></script>
+    <script src="MessageLoops.js"></script>
+</body>
+</html>

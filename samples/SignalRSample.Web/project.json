@@ -1,19 +1,23 @@
 {
     "webroot": ".",
     "dependencies": {
-        "Microsoft.Framework.OptionsModel":  "",
         "Microsoft.AspNet.Server.IIS": "1.0.0-*",
         "Microsoft.AspNet.RequestContainer": "1.0.0-*",
         "Microsoft.AspNet.Server.WebListener": "1.0.0-*",
         "Microsoft.AspNet.StaticFiles": "1.0.0-*",
-        "Microsoft.AspNet.SignalR.Server": "",
-        "Microsoft.AspNet.SignalR.SqlServer": ""
+        "Microsoft.AspNet.SignalR.Server": "3.0.0-*",
+        "Microsoft.AspNet.SignalR.SqlServer": "3.0.0-*",
+        "Serilog": "1.4.113.0"
     },
     "commands": {
         "web": "Microsoft.AspNet.Hosting server=Microsoft.AspNet.Server.WebListener server.urls=http://localhost:5002"
     },
     "frameworks": {
-        "aspnet50": { },
+        "aspnet50": {
+            "dependencies": {
+                "Microsoft.Framework.Logging.Serilog": "1.0.0-*"
+            }      
+        },
         "aspnetcore50": { }
     }
 }

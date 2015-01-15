@@ -61,7 +61,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             _configuration = configuration;
             _dbProviderFactory = dbProviderFactory;
             
-            _logger = loggerFactory.Create("SignalR." + typeof(SqlMessageBus).Name);
+            _logger = loggerFactory.Create<SqlMessageBus>();
             ThreadPool.QueueUserWorkItem(Initialize);
         }
 

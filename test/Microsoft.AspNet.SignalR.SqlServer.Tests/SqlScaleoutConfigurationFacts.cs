@@ -1,11 +1,27 @@
 ﻿using System;
 using Xunit;
-using Xunit.Extensions;
 
-namespace Microsoft.AspNet.SignalR.SqlServer.Tests 
+namespace Microsoft.AspNet.SignalR.SqlServer.Tests
 {
     public class SqlScaleoutConfigurationFacts
     {
+        [Theory]
+        [InlineData(null, false)]
+        [InlineData("", false)]
+        [InlineData("dummy", true)]
+        public void ConnectionStringValidated(string connectionString, bool isValid)
+        {
+            var config = new SqlScaleoutConfiguration();
+            if (isValid)
+            {
+                config.ConnectionString = connectionString;
+            }
+            else
+            {
+                Assert.Throws(typeof(ArgumentNullException), () => config.ConnectionString = connectionString);
+            }
+        }
+
         [Theory]
         [InlineData(-1, false)]
         [InlineData(0, false)]
@@ -23,23 +39,6 @@ namespace Microsoft.AspNet.SignalR.SqlServer.Tests
             else
             {
                 Assert.Throws(typeof(ArgumentOutOfRangeException), () => config.TableCount = tableCount);
-            }
-        }
-
-        [Theory]
-        [InlineData(null, false)]
-        [InlineData("", false)]
-        [InlineData("dummy", true)]
-        public void ConnectionStringValidated(string connectionString, bool isValid)
-        {
-            var config = new SqlScaleoutConfiguration();
-            if (isValid)
-            {
-                config.ConnectionString = connectionString;
-            }
-            else
-            {
-                Assert.Throws(typeof(ArgumentNullException), () => config.ConnectionString = connectionString);
             }
         }
     }

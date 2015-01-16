@@ -9,13 +9,13 @@ using Microsoft.Framework.ConfigurationModel;
 
 namespace Microsoft.Framework.DependencyInjection
 {
-    public static class SqlScaleoutServiceCollectionExtensions
+    public static class SqlServerServiceCollectionExtensions
     {
-        public static IServiceCollection AddSignalRSqlScaleout(this IServiceCollection services, Action<SqlScaleoutConfiguration> configureOptions = null)
+        public static IServiceCollection AddSignalRSqlServer(this IServiceCollection services, Action<SqlScaleoutConfiguration> configureOptions = null)
         {
-            return services.AddSignalRSqlScaleout(configuration: null, configureOptions: configureOptions);
+            return services.AddSignalRSqlServer(configuration: null, configureOptions: configureOptions);
         }
-        public static IServiceCollection AddSignalRSqlScaleout(this IServiceCollection services, IConfiguration configuration, Action<SqlScaleoutConfiguration> configureOptions = null)
+        public static IServiceCollection AddSignalRSqlServer(this IServiceCollection services, IConfiguration configuration, Action<SqlScaleoutConfiguration> configureOptions = null)
         {
             var describe = new ServiceDescriber(configuration);
 

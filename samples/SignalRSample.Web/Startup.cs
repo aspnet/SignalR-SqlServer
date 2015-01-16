@@ -21,17 +21,16 @@ namespace SignalRSample.Web
             app.UseServices(services =>
             {
                 services.AddSignalR(options =>
-                {
-                    options.Hubs.EnableDetailedErrors = true;
+                        {
+                            options.Hubs.EnableDetailedErrors = true;
 
-                    // options.Hubs.RequireAuthentication();
-                });
-
-                services.AddSignalRSqlScaleout(options =>
-                {
-                    options.ConnectionString = "Data Source=WEBNETQASQL15;user id=sa;password=ASP+Rocks4U;Initial Catalog=xh_sqlserver";
-                    options.TableCount = 2;
-                });
+                            // options.Hubs.RequireAuthentication();
+                        })
+                        .AddSignalRSqlServer(options =>
+                        {
+                            options.ConnectionString = "Data Source=WEBNETQASQL15;user id=sa;password=ASP+Rocks4U;Initial Catalog=xh_sqlserver";
+                            options.TableCount = 2;
+                        });                       
             });
 
             app.UseFileServer();

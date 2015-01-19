@@ -1,0 +1,23 @@
+{
+    "version": "3.0.0-*",
+    "description": "Core server components for ASP.NET SignalR.",
+    "dependencies": {
+        "System.Data.Common": "1.0.0.0-*",
+        "System.Data.SqlClient": "1.0.0.0-*",
+        "Microsoft.AspNet.HttpFeature": { "version": "1.0.0-*", "type": "build" },
+        "Microsoft.AspNet.RequestContainer": "1.0.0-*",
+        "Microsoft.AspNet.Security.DataProtection": "1.0.0-*",
+        "Microsoft.AspNet.SignalR.Server": "3.0.0-*",
+        "Microsoft.Framework.Logging": "1.0.0-*",
+        "Microsoft.Framework.Runtime.Interfaces": { "version": "1.0.0-*", "type": "build" },
+        "Newtonsoft.Json": "6.0.6"
+    },
+    "compilationOptions": {
+        "warningsAsErrors": true
+    },
+    "resources": "install.sql;send.sql",
+    "frameworks": {
+        "aspnet50": { },
+        "aspnetcore50": { }
+    }
+}

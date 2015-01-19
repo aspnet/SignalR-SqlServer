@@ -1,0 +1,16 @@
+{
+    "dependencies": {
+        "Microsoft.AspNet.SignalR.SqlServer": "3.0.0-*",
+        "xunit.runner.kre": "1.0.0-*",
+        "Moq": "4.2.1312.1622"
+    },
+    "compilationOptions": {
+        "allowUnsafe": true
+    },
+    "frameworks": {
+        "aspnet50": { }
+    },
+    "commands": {
+        "test": "xunit.runner.kre"
+    }
+}

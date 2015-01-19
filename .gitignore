@@ -23,6 +23,5 @@ nuget.exe
 *.ncrunchsolution
 *.*sdf
 *.ipch
-/SignalR-Server.sln.ide
-
 *.sln.ide
+debugSettings.json

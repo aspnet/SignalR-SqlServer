@@ -11,11 +11,11 @@ namespace Microsoft.Framework.DependencyInjection
 {
     public static class SqlServerServiceCollectionExtensions
     {
-        public static IServiceCollection AddSignalRSqlServer(this IServiceCollection services, Action<SqlScaleoutConfiguration> configureOptions = null)
+        public static IServiceCollection AddSqlServer(this IServiceCollection services, Action<SqlScaleoutConfiguration> configureOptions = null)
         {
-            return services.AddSignalRSqlServer(configuration: null, configureOptions: configureOptions);
+            return services.AddSqlServer(configuration: null, configureOptions: configureOptions);
         }
-        public static IServiceCollection AddSignalRSqlServer(this IServiceCollection services, IConfiguration configuration, Action<SqlScaleoutConfiguration> configureOptions = null)
+        public static IServiceCollection AddSqlServer(this IServiceCollection services, IConfiguration configuration, Action<SqlScaleoutConfiguration> configureOptions = null)
         {
             var describe = new ServiceDescriber(configuration);
 

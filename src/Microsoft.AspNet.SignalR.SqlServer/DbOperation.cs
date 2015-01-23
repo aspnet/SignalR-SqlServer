@@ -112,7 +112,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 #if ASPNET50
         protected virtual IDbCommand CreateCommand(IDbConnection connection)
 #else
-        protected virtual DbCommand CreateCommand(DbConnection connection)                  
+        protected virtual DbCommand CreateCommand(DbConnection connection)
 #endif
         {
             var command = connection.CreateCommand();
@@ -137,26 +137,14 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 #endif
         {
             T result = default(T);
-#if ASPNET50
-            IDbConnection connection = null;
-#else
-            DbConnection connection = null;
-#endif
-            try
+
+            using (var connection = _dbProviderFactory.CreateConnection())
             {
-                connection = _dbProviderFactory.CreateConnection();
                 connection.ConnectionString = ConnectionString;
                 var command = CreateCommand(connection);
                 connection.Open();
                 LoggerCommand(command);
                 result = commandFunc(command);
-            }
-            finally
-            {
-                if (connection != null)
-                {
-                    connection.Dispose();
-                }
             }
 
             return result;
@@ -180,43 +168,28 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Disposed in async Finally block"),
          SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposed in async Finally block")]
 #if ASPNET50
-        private void Execute<T>(Func<IDbCommand, Task<T>> commandFunc, TaskCompletionSource<T> tcs)
+        private async void Execute<T>(Func<IDbCommand, Task<T>> commandFunc, TaskCompletionSource<T> tcs)
 #else
-        private void Execute<T>(Func<DbCommand, Task<T>> commandFunc, TaskCompletionSource<T> tcs)
+        private async void Execute<T>(Func<DbCommand, Task<T>> commandFunc, TaskCompletionSource<T> tcs)
 #endif
         {
-#if ASPNET50
-            IDbConnection connection = null;
-#else
-            DbConnection connection = null;
-#endif
-            try
+            using (var connection = _dbProviderFactory.CreateConnection())
             {
-                connection = _dbProviderFactory.CreateConnection();
                 connection.ConnectionString = ConnectionString;
                 var command = CreateCommand(connection);
 
                 connection.Open();
 
-                commandFunc(command)
-                    .Then(result => tcs.SetResult(result))
-                    .Catch(ex => tcs.SetUnwrappedException(ex), Logger)
-                    .Finally(state =>
-                    {
-                        var conn = (DbConnection)state;
-                        if (conn != null)
-                        {
-                            conn.Dispose();
-                        }
-                    }, connection);
-            }
-            catch (Exception)
-            {
-                if (connection != null)
+                try
                 {
-                    connection.Dispose();
+                    var result = await commandFunc(command);
+                    tcs.SetResult(result);
                 }
-                throw;
+                catch (Exception ex)
+                {
+                    tcs.SetException(ex);
+                    Logger.WriteWarning("Exception thrown by Task", ex);
+                }
             }
         }
     }

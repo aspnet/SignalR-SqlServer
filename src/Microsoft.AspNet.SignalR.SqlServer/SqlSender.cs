@@ -39,14 +39,14 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         {
             if (messages == null || messages.Count == 0)
             {
-                return TaskAsyncHelper.Empty;
+                return Task.FromResult<object>(null);
             }
 
             var parameter = _dbProviderFactory.CreateParameter();
             parameter.ParameterName = "Payload";
             parameter.DbType = DbType.Binary;
             parameter.Value = SqlPayload.ToBytes(messages);
-            
+
             var operation = new DbOperation(_connectionString, _insertDml, _logger, parameter);
 
             return operation.ExecuteNonQueryAsync();

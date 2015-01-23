@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
+using System.Data;
 using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -88,14 +89,14 @@ namespace Microsoft.AspNet.SignalR.SqlServer
                     _lastPayloadId = (long?)lastPayloadIdOperation.ExecuteScalar();
                     Queried();
 
-                     _logger.WriteVerbose(String.Format("{0}SqlReceiver started, initial payload id={1}", _loggerPrefix, _lastPayloadId));
+                    _logger.WriteVerbose(String.Format("{0}SqlReceiver started, initial payload id={1}", _loggerPrefix, _lastPayloadId));
 
                     // Complete the StartReceiving task as we've successfully initialized the payload ID
                     tcs.TrySetResult(null);
                 }
                 catch (Exception ex)
                 {
-                     _logger.WriteError(String.Format("{0}SqlReceiver error starting: {1}", _loggerPrefix, ex));
+                    _logger.WriteError(String.Format("{0}SqlReceiver error starting: {1}", _loggerPrefix, ex));
 
                     tcs.TrySetException(ex);
                     return;
@@ -137,12 +138,16 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             _logger.WriteInformation("{0}SqlReceiver.Receive returned", _loggerPrefix);
         }
 
+#if ASPNET50
+        private void ProcessRecord(IDataRecord record, DbOperation dbOperation)
+#else
         private void ProcessRecord(DbDataReader record, DbOperation dbOperation)
+#endif
         {
             var id = record.GetInt64(0);
             ScaleoutMessage message = SqlPayload.FromBytes(record);
 
-             _logger.WriteVerbose(String.Format("{0}SqlReceiver last payload ID={1}, new payload ID={2}", _loggerPrefix, _lastPayloadId, id));
+            _logger.WriteVerbose(String.Format("{0}SqlReceiver last payload ID={1}, new payload ID={2}", _loggerPrefix, _lastPayloadId, id));
 
             if (id > _lastPayloadId + 1)
             {
@@ -158,9 +163,9 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             // Update the Parameter with the new payload ID
             dbOperation.Parameters[0].Value = _lastPayloadId;
 
-             _logger.WriteVerbose(String.Format("{0}Updated receive reader initial payload ID parameter={1}", _loggerPrefix, _dbOperation.Parameters[0].Value));
+            _logger.WriteVerbose(String.Format("{0}Updated receive reader initial payload ID parameter={1}", _loggerPrefix, _dbOperation.Parameters[0].Value));
 
-             _logger.WriteVerbose(String.Format("{0}Payload {1} containing {2} message(s) received", _loggerPrefix, id, message.Messages.Count));
+            _logger.WriteVerbose(String.Format("{0}Payload {1} containing {2} message(s) received", _loggerPrefix, id, message.Messages.Count));
 
             Received((ulong)id, message);
         }

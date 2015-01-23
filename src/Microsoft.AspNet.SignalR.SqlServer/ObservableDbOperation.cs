@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -84,7 +85,11 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         /// </summary>
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Needs refactoring"),
          SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Errors are reported via the callback")]
+#if ASPNET50
+        public void ExecuteReaderWithUpdates(Action<IDataRecord, DbOperation> processRecord)
+#else
         public void ExecuteReaderWithUpdates(Action<DbDataReader, DbOperation> processRecord)
+#endif
         {
             lock (_stopLocker)
             {
@@ -271,7 +276,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         }
 
 #if ASPNET50
-        protected virtual void AddSqlDependency(DbCommand command, Action<SqlNotificationEventArgs> callback)
+        protected virtual void AddSqlDependency(IDbCommand command, Action<SqlNotificationEventArgs> callback)
         {
             command.AddSqlDependency(e => callback(e));
         }
@@ -458,7 +463,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         }
 
 #if ASPNET50
-        void IDbBehavior.AddSqlDependency(DbCommand command, Action<SqlNotificationEventArgs> callback)
+        void IDbBehavior.AddSqlDependency(IDbCommand command, Action<SqlNotificationEventArgs> callback)
         {
             AddSqlDependency(command, callback);
         }

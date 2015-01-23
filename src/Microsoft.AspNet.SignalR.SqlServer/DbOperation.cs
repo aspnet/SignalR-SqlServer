@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Diagnostics.CodeAnalysis;
@@ -21,7 +22,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         public DbOperation(string connectionString, string commandText, ILogger logger)
             : this(connectionString, commandText, logger, SqlClientFactory.Instance.AsIDbProviderFactory())
         {
-            
+
         }
 
         public DbOperation(string connectionString, string commandText, ILogger logger, IDbProviderFactory dbProviderFactory)
@@ -71,12 +72,20 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             return tcs.Task;
         }
 
+#if ASPNET50
+        public virtual int ExecuteReader(Action<IDataRecord, DbOperation> processRecord)
+#else
         public virtual int ExecuteReader(Action<DbDataReader, DbOperation> processRecord)
+#endif
         {
             return ExecuteReader(processRecord, null);
         }
 
+#if ASPNET50
+        protected virtual int ExecuteReader(Action<IDataRecord, DbOperation> processRecord, Action<IDbCommand> commandAction)
+#else
         protected virtual int ExecuteReader(Action<DbDataReader, DbOperation> processRecord, Action<DbCommand> commandAction)
+#endif      
         {
             return Execute(cmd =>
             {
@@ -100,7 +109,11 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 
         [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "It's the caller's responsibility to dispose as the command is returned"),
          SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "General purpose SQL utility command")]
-        protected virtual DbCommand CreateCommand(DbConnection connection)
+#if ASPNET50
+        protected virtual IDbCommand CreateCommand(IDbConnection connection)
+#else
+        protected virtual DbCommand CreateCommand(DbConnection connection)                  
+#endif
         {
             var command = connection.CreateCommand();
             command.CommandText = CommandText;
@@ -117,11 +130,18 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         }
 
         [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "False positive?")]
+#if ASPNET50
+        private T Execute<T>(Func<IDbCommand, T> commandFunc)
+#else
         private T Execute<T>(Func<DbCommand, T> commandFunc)
+#endif
         {
             T result = default(T);
+#if ASPNET50
+            IDbConnection connection = null;
+#else
             DbConnection connection = null;
-            
+#endif
             try
             {
                 connection = _dbProviderFactory.CreateConnection();
@@ -142,7 +162,11 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             return result;
         }
 
+#if ASPNET50
+        private void LoggerCommand(IDbCommand command)
+#else
         private void LoggerCommand(DbCommand command)
+#endif
         {
             if (Logger.IsEnabled(LogLevel.Verbose))
             {
@@ -155,10 +179,17 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 
         [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Disposed in async Finally block"),
          SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposed in async Finally block")]
+#if ASPNET50
+        private void Execute<T>(Func<IDbCommand, Task<T>> commandFunc, TaskCompletionSource<T> tcs)
+#else
         private void Execute<T>(Func<DbCommand, Task<T>> commandFunc, TaskCompletionSource<T> tcs)
+#endif
         {
+#if ASPNET50
+            IDbConnection connection = null;
+#else
             DbConnection connection = null;
-           
+#endif
             try
             {
                 connection = _dbProviderFactory.CreateConnection();

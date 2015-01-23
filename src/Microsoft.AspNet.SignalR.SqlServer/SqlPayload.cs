@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using JetBrains.Annotations;
 using Microsoft.AspNet.SignalR.Messaging;
@@ -17,7 +18,11 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             return message.ToBytes();
         }
 
+#if ASPNET50
+        public static ScaleoutMessage FromBytes(IDataRecord record)
+#else
         public static ScaleoutMessage FromBytes(DbDataReader record)
+#endif
         {
             var message = ScaleoutMessage.FromBytes(record.GetBinary(1));
 

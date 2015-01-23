@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 
@@ -14,7 +15,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         IList<Tuple<int, int>> UpdateLoopRetryDelays { get; }
 
 #if ASPNET50
-        void AddSqlDependency(DbCommand command, Action<SqlNotificationEventArgs> callback);
+        void AddSqlDependency(IDbCommand command, Action<SqlNotificationEventArgs> callback);
 #endif
     }
 }

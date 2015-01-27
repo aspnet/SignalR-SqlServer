@@ -46,7 +46,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             }
             else
             {
-                return Task.FromResult<int>(command.ExecuteNonQuery());
+                return Task.FromResult(command.ExecuteNonQuery());
             }
         }
     }

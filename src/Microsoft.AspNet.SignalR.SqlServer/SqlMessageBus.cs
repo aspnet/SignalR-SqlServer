@@ -146,10 +146,10 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             catch (Exception ex)
             {
                 OnError(streamIndex, ex);
-                Thread.Sleep(2000);
-                StartReceiving(streamIndex);
 
                 _logger.WriteWarning("Exception thrown by Task", ex);
+                Thread.Sleep(2000);
+                StartReceiving(streamIndex);
             }
         }
     }

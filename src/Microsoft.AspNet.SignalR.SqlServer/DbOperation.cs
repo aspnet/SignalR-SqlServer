@@ -67,9 +67,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 
         public virtual Task<int> ExecuteNonQueryAsync()
         {
-            var tcs = new TaskCompletionSource<int>();
-            Execute(cmd => cmd.ExecuteNonQueryAsync(), tcs);
-            return tcs.Task;
+            return Execute(cmd => cmd.ExecuteNonQueryAsync());
         }
 
 #if ASPNET50
@@ -168,9 +166,9 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Disposed in async Finally block"),
          SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposed in async Finally block")]
 #if ASPNET50
-        private async void Execute<T>(Func<IDbCommand, Task<T>> commandFunc, TaskCompletionSource<T> tcs)
+        private async Task<T> Execute<T>(Func<IDbCommand, Task<T>> commandFunc)
 #else
-        private async void Execute<T>(Func<DbCommand, Task<T>> commandFunc, TaskCompletionSource<T> tcs)
+        private async Task<T> Execute<T>(Func<DbCommand, Task<T>> commandFunc)
 #endif
         {
             using (var connection = _dbProviderFactory.CreateConnection())
@@ -182,13 +180,12 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 
                 try
                 {
-                    var result = await commandFunc(command);
-                    tcs.SetResult(result);
+                    return await commandFunc(command);
                 }
                 catch (Exception ex)
                 {
-                    tcs.SetException(ex);
                     Logger.WriteWarning("Exception thrown by Task", ex);
+                    throw;
                 }
             }
         }

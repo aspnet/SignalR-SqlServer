@@ -67,9 +67,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 
         public virtual Task<int> ExecuteNonQueryAsync()
         {
-            var tcs = new TaskCompletionSource<int>();
-            Execute(cmd => cmd.ExecuteNonQueryAsync(), tcs);
-            return tcs.Task;
+            return Execute(cmd => cmd.ExecuteNonQueryAsync());
         }
 
 #if ASPNET50
@@ -107,12 +105,10 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             });
         }
 
-        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "It's the caller's responsibility to dispose as the command is returned"),
-         SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "General purpose SQL utility command")]
 #if ASPNET50
         protected virtual IDbCommand CreateCommand(IDbConnection connection)
 #else
-        protected virtual DbCommand CreateCommand(DbConnection connection)                  
+        protected virtual DbCommand CreateCommand(DbConnection connection)
 #endif
         {
             var command = connection.CreateCommand();
@@ -129,37 +125,20 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             return command;
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "False positive?")]
 #if ASPNET50
         private T Execute<T>(Func<IDbCommand, T> commandFunc)
 #else
         private T Execute<T>(Func<DbCommand, T> commandFunc)
 #endif
         {
-            T result = default(T);
-#if ASPNET50
-            IDbConnection connection = null;
-#else
-            DbConnection connection = null;
-#endif
-            try
+            using (var connection = _dbProviderFactory.CreateConnection())
             {
-                connection = _dbProviderFactory.CreateConnection();
                 connection.ConnectionString = ConnectionString;
                 var command = CreateCommand(connection);
                 connection.Open();
                 LoggerCommand(command);
-                result = commandFunc(command);
+                return commandFunc(command);
             }
-            finally
-            {
-                if (connection != null)
-                {
-                    connection.Dispose();
-                }
-            }
-
-            return result;
         }
 
 #if ASPNET50
@@ -177,46 +156,28 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             }
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Disposed in async Finally block"),
-         SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposed in async Finally block")]
 #if ASPNET50
-        private void Execute<T>(Func<IDbCommand, Task<T>> commandFunc, TaskCompletionSource<T> tcs)
+        private async Task<T> Execute<T>(Func<IDbCommand, Task<T>> commandFunc)
 #else
-        private void Execute<T>(Func<DbCommand, Task<T>> commandFunc, TaskCompletionSource<T> tcs)
+        private async Task<T> Execute<T>(Func<DbCommand, Task<T>> commandFunc)
 #endif
         {
-#if ASPNET50
-            IDbConnection connection = null;
-#else
-            DbConnection connection = null;
-#endif
-            try
+            using (var connection = _dbProviderFactory.CreateConnection())
             {
-                connection = _dbProviderFactory.CreateConnection();
                 connection.ConnectionString = ConnectionString;
                 var command = CreateCommand(connection);
 
                 connection.Open();
 
-                commandFunc(command)
-                    .Then(result => tcs.SetResult(result))
-                    .Catch(ex => tcs.SetUnwrappedException(ex), Logger)
-                    .Finally(state =>
-                    {
-                        var conn = (DbConnection)state;
-                        if (conn != null)
-                        {
-                            conn.Dispose();
-                        }
-                    }, connection);
-            }
-            catch (Exception)
-            {
-                if (connection != null)
+                try
                 {
-                    connection.Dispose();
+                    return await commandFunc(command);
                 }
-                throw;
+                catch (Exception ex)
+                {
+                    Logger.WriteWarning("Exception thrown by Task", ex);
+                    throw;
+                }
             }
         }
     }

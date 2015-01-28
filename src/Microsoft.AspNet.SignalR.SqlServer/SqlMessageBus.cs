@@ -26,7 +26,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 
         private readonly string _connectionString;
         private readonly SqlScaleoutConfiguration _configuration;
-       
+
         private readonly ILogger _logger;
         private readonly IDbProviderFactory _dbProviderFactory;
         private readonly List<SqlStream> _streams = new List<SqlStream>();
@@ -58,7 +58,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             _connectionString = configuration.ConnectionString;
             _configuration = configuration;
             _dbProviderFactory = dbProviderFactory;
-            
+
             _logger = loggerFactory.Create<SqlMessageBus>();
             ThreadPool.QueueUserWorkItem(Initialize);
         }
@@ -111,7 +111,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
                         OnError(i, ex);
                     }
 
-                     _logger.WriteError("Error trying to install SQL server objects, trying again in 2 seconds: {0}", ex);
+                    _logger.WriteError("Error trying to install SQL server objects, trying again in 2 seconds: {0}", ex);
 
                     // Try again in a little bit
                     Thread.Sleep(2000);
@@ -137,19 +137,24 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         private void StartReceiving(int streamIndex)
         {
             var stream = _streams[streamIndex];
-            stream.StartReceiving()
-                // Open the stream once receiving has started
-                .Then(() => Open(streamIndex))
-                // Starting the receive loop failed
-                .Catch(ex =>
+
+            stream.StartReceiving().ContinueWith(async task =>
+            {
+                try
+                {
+                    await task;
+                    // Open the stream once receiving has started
+                    Open(streamIndex);
+                }
+                catch (Exception ex)
                 {
                     OnError(streamIndex, ex);
 
-                    // Try again in a little bit
+                    _logger.WriteWarning("Exception thrown by Task", ex);
                     Thread.Sleep(2000);
                     StartReceiving(streamIndex);
-                },
-                _logger);
+                }
+            });
         }
     }
 }

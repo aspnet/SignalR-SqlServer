@@ -105,8 +105,6 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             });
         }
 
-        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "It's the caller's responsibility to dispose as the command is returned"),
-         SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "General purpose SQL utility command")]
 #if ASPNET50
         protected virtual IDbCommand CreateCommand(IDbConnection connection)
 #else
@@ -127,7 +125,6 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             return command;
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "False positive?")]
 #if ASPNET50
         private T Execute<T>(Func<IDbCommand, T> commandFunc)
 #else
@@ -159,8 +156,6 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             }
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Disposed in async Finally block"),
-         SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposed in async Finally block")]
 #if ASPNET50
         private async Task<T> Execute<T>(Func<IDbCommand, Task<T>> commandFunc)
 #else

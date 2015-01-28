@@ -134,23 +134,27 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             }
         }
 
-        private async void StartReceiving(int streamIndex)
+        private void StartReceiving(int streamIndex)
         {
             var stream = _streams[streamIndex];
-            try
-            {
-                await stream.StartReceiving();
-                // Open the stream once receiving has started
-                Open(streamIndex);
-            }
-            catch (Exception ex)
-            {
-                OnError(streamIndex, ex);
 
-                _logger.WriteWarning("Exception thrown by Task", ex);
-                Thread.Sleep(2000);
-                StartReceiving(streamIndex);
-            }
+            stream.StartReceiving().ContinueWith(async task =>
+            {
+                try
+                {
+                    await task;
+                    // Open the stream once receiving has started
+                    Open(streamIndex);
+                }
+                catch (Exception ex)
+                {
+                    OnError(streamIndex, ex);
+
+                    _logger.WriteWarning("Exception thrown by Task", ex);
+                    Thread.Sleep(2000);
+                    StartReceiving(streamIndex);
+                }
+            });
         }
     }
 }

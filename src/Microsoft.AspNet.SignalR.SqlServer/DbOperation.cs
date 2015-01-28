@@ -134,18 +134,14 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         private T Execute<T>(Func<DbCommand, T> commandFunc)
 #endif
         {
-            T result = default(T);
-
             using (var connection = _dbProviderFactory.CreateConnection())
             {
                 connection.ConnectionString = ConnectionString;
                 var command = CreateCommand(connection);
                 connection.Open();
                 LoggerCommand(command);
-                result = commandFunc(command);
+                return commandFunc(command);
             }
-
-            return result;
         }
 
 #if ASPNET50

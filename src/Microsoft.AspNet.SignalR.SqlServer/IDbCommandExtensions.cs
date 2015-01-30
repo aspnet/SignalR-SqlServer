@@ -39,10 +39,14 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 
             if (sqlCommand != null)
             {
+#if ASPNET50
                 return Task.Factory.FromAsync(
                     (cb, state) => sqlCommand.BeginExecuteNonQuery(cb, state),
                     iar => sqlCommand.EndExecuteNonQuery(iar),
                     null);
+#else
+                return sqlCommand.ExecuteNonQueryAsync();
+#endif
             }
             else
             {

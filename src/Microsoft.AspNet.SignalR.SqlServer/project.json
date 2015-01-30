@@ -2,8 +2,6 @@
     "version": "3.0.0-*",
     "description": "Core server components for ASP.NET SignalR.",
     "dependencies": {
-        "System.Data.Common": "1.0.0-*",
-        "System.Data.SqlClient": "1.0.0-*",
         "Microsoft.AspNet.SignalR.Server": "3.0.0-*"
     },
     "compilationOptions": {
@@ -11,7 +9,16 @@
     },
     "resources": "install.sql;send.sql",
     "frameworks": {
-        "aspnet50": { },
-        "aspnetcore50": { }
+        "aspnet50": {
+            "frameworkAssemblies": {
+                "System.Data": ""
+            }
+        },
+        "aspnetcore50": {
+            "dependencies": {
+                "System.Data.Common": "4.0.0-*",
+                "System.Data.SqlClient": "4.0.0-*"
+            }
+        }
     }
 }

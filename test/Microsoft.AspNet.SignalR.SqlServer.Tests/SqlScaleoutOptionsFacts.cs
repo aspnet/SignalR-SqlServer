@@ -14,7 +14,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer.Tests
         [InlineData("dummy", true)]
         public void ConnectionStringValidated(string connectionString, bool isValid)
         {
-            var config = new SqlScaleoutConfiguration();
+            var config = new SqlScaleoutOptions();
             if (isValid)
             {
                 config.ConnectionString = connectionString;
@@ -32,7 +32,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer.Tests
         [InlineData(10, true)]
         public void TableCountValidated(int tableCount, bool isValid)
         {
-            var config = new SqlScaleoutConfiguration();
+            var config = new SqlScaleoutOptions();
 
             if (isValid)
             {

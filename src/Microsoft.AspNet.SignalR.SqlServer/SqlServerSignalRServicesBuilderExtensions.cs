@@ -11,11 +11,11 @@ namespace Microsoft.Framework.DependencyInjection
 {
     public static class SqlServerSignalRServicesBuilderExtensions
     {
-        public static SignalRServicesBuilder AddSqlServer(this SignalRServicesBuilder builder, Action<SqlScaleoutConfiguration> configureOptions = null)
+        public static SignalRServicesBuilder AddSqlServer(this SignalRServicesBuilder builder, Action<SqlScaleoutOptions> configureOptions = null)
         {
             return builder.AddSqlServer(configuration: null, configureOptions: configureOptions);
         }
-        public static SignalRServicesBuilder AddSqlServer(this SignalRServicesBuilder builder, IConfiguration configuration, Action<SqlScaleoutConfiguration> configureOptions = null)
+        public static SignalRServicesBuilder AddSqlServer(this SignalRServicesBuilder builder, IConfiguration configuration, Action<SqlScaleoutOptions> configureOptions = null)
         {
             var describe = new ServiceDescriber(configuration);
 
@@ -23,7 +23,7 @@ namespace Microsoft.Framework.DependencyInjection
 
             if (configuration != null)
             {
-                builder.ServiceCollection.Configure<SqlScaleoutConfiguration>(configuration);
+                builder.ServiceCollection.Configure<SqlScaleoutOptions>(configuration);
             }
 
             if (configureOptions != null)

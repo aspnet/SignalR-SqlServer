@@ -25,7 +25,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         private const string _tableNamePrefix = "Messages";
 
         private readonly string _connectionString;
-        private readonly SqlScaleoutConfiguration _configuration;
+        private readonly SqlScaleoutOptions _configuration;
 
         private readonly ILogger _logger;
         private readonly IDbProviderFactory _dbProviderFactory;
@@ -40,8 +40,8 @@ namespace Microsoft.AspNet.SignalR.SqlServer
                                      ILoggerFactory loggerFactory,
                                      IPerformanceCounterManager performanceCounterManager,
                                      IOptions<SignalROptions> optionsAccessor,
-                                     IOptions<SqlScaleoutConfiguration> scaleoutConfigurationAccessor)
-            : this(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor, scaleoutConfigurationAccessor, SqlClientFactory.Instance.AsIDbProviderFactory())
+                                     IOptions<SqlScaleoutOptions> scaleoutOptionsAccessor)
+            : this(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor, scaleoutOptionsAccessor, SqlClientFactory.Instance.AsIDbProviderFactory())
         {
 
         }
@@ -50,11 +50,11 @@ namespace Microsoft.AspNet.SignalR.SqlServer
                                      ILoggerFactory loggerFactory,
                                      IPerformanceCounterManager performanceCounterManager,
                                      IOptions<SignalROptions> optionsAccessor,
-                                     IOptions<SqlScaleoutConfiguration> scaleoutConfigurationAccessor,
+                                     IOptions<SqlScaleoutOptions> scaleoutOptionsAccessor,
                                      IDbProviderFactory dbProviderFactory)
-            : base(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor, scaleoutConfigurationAccessor)
+            : base(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor, scaleoutOptionsAccessor)
         {
-            var configuration = scaleoutConfigurationAccessor.Options;
+            var configuration = scaleoutOptionsAccessor.Options;
             _connectionString = configuration.ConnectionString;
             _configuration = configuration;
             _dbProviderFactory = dbProviderFactory;

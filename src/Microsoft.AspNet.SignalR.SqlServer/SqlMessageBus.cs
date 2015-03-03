@@ -39,7 +39,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         public SqlMessageBus(IStringMinifier stringMinifier,
                                      ILoggerFactory loggerFactory,
                                      IPerformanceCounterManager performanceCounterManager,
-                                     IOptions<SignalROptions> optionsAccessor,
+                                     IOptions<MessageBusOptions> optionsAccessor,
                                      IOptions<SqlScaleoutOptions> scaleoutOptionsAccessor)
             : this(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor, scaleoutOptionsAccessor, SqlClientFactory.Instance.AsIDbProviderFactory())
         {
@@ -49,7 +49,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         internal SqlMessageBus(IStringMinifier stringMinifier,
                                      ILoggerFactory loggerFactory,
                                      IPerformanceCounterManager performanceCounterManager,
-                                     IOptions<SignalROptions> optionsAccessor,
+                                     IOptions<MessageBusOptions> optionsAccessor,
                                      IOptions<SqlScaleoutOptions> scaleoutOptionsAccessor,
                                      IDbProviderFactory dbProviderFactory)
             : base(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor, scaleoutOptionsAccessor)

@@ -17,9 +17,7 @@ namespace Microsoft.Framework.DependencyInjection
         }
         public static SignalRServicesBuilder AddSqlServer(this SignalRServicesBuilder builder, IConfiguration configuration, Action<SqlScaleoutOptions> configureOptions = null)
         {
-            var describe = new ServiceDescriber(configuration);
-
-            builder.ServiceCollection.Add(describe.Singleton<IMessageBus, SqlMessageBus>());
+            builder.ServiceCollection.Add(ServiceDescriptor.Singleton<IMessageBus, SqlMessageBus>());
 
             if (configuration != null)
             {

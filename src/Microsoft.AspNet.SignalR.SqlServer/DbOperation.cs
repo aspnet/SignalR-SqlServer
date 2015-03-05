@@ -149,7 +149,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         {
             if (Logger.IsEnabled(LogLevel.Verbose))
             {
-                Logger.WriteVerbose(String.Format("Created DbCommand: CommandType={0}, CommandText={1}, Parameters={2}", command.CommandType, command.CommandText,
+                Logger.LogVerbose(String.Format("Created DbCommand: CommandType={0}, CommandText={1}, Parameters={2}", command.CommandType, command.CommandText,
                     command.Parameters.Cast<DbParameter>()
                         .Aggregate(string.Empty, (msg, p) => string.Format(CultureInfo.InvariantCulture, "{0} [Name={1}, Value={2}]", msg, p.ParameterName, p.Value)))
                 );
@@ -175,7 +175,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
                 }
                 catch (Exception ex)
                 {
-                    Logger.WriteWarning("Exception thrown by Task", ex);
+                    Logger.LogWarning("Exception thrown by Task", ex);
                     throw;
                 }
             }

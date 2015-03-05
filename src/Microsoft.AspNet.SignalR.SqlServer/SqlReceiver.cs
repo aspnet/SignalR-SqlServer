@@ -67,7 +67,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
                     _dbOperation.Dispose();
                 }
                 _disposed = true;
-                _logger.WriteInformation("{0}SqlReceiver disposed", _loggerPrefix);
+                _logger.LogInformation("{0}SqlReceiver disposed", _loggerPrefix);
             }
         }
 
@@ -89,14 +89,14 @@ namespace Microsoft.AspNet.SignalR.SqlServer
                     _lastPayloadId = (long?)lastPayloadIdOperation.ExecuteScalar();
                     Queried();
 
-                    _logger.WriteVerbose(String.Format("{0}SqlReceiver started, initial payload id={1}", _loggerPrefix, _lastPayloadId));
+                    _logger.LogVerbose(String.Format("{0}SqlReceiver started, initial payload id={1}", _loggerPrefix, _lastPayloadId));
 
                     // Complete the StartReceiving task as we've successfully initialized the payload ID
                     tcs.TrySetResult(null);
                 }
                 catch (Exception ex)
                 {
-                    _logger.WriteError(String.Format("{0}SqlReceiver error starting: {1}", _loggerPrefix, ex));
+                    _logger.LogError(String.Format("{0}SqlReceiver error starting: {1}", _loggerPrefix, ex));
 
                     tcs.TrySetException(ex);
                     return;
@@ -126,16 +126,16 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 #if ASPNET50
             _dbOperation.Changed += () =>
             {
-                _logger.WriteInformation("{0}Starting receive loop again to process updates", _loggerPrefix);
+                _logger.LogInformation("{0}Starting receive loop again to process updates", _loggerPrefix);
 
                 _dbOperation.ExecuteReaderWithUpdates(ProcessRecord);
             };
 #endif
-            _logger.WriteVerbose(String.Format("{0}Executing receive reader, initial payload ID parameter={1}", _loggerPrefix, _dbOperation.Parameters[0].Value));
+            _logger.LogVerbose(String.Format("{0}Executing receive reader, initial payload ID parameter={1}", _loggerPrefix, _dbOperation.Parameters[0].Value));
 
             _dbOperation.ExecuteReaderWithUpdates(ProcessRecord);
 
-            _logger.WriteInformation("{0}SqlReceiver.Receive returned", _loggerPrefix);
+            _logger.LogInformation("{0}SqlReceiver.Receive returned", _loggerPrefix);
         }
 
 #if ASPNET50
@@ -147,15 +147,15 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             var id = record.GetInt64(0);
             ScaleoutMessage message = SqlPayload.FromBytes(record);
 
-            _logger.WriteVerbose(String.Format("{0}SqlReceiver last payload ID={1}, new payload ID={2}", _loggerPrefix, _lastPayloadId, id));
+            _logger.LogVerbose(String.Format("{0}SqlReceiver last payload ID={1}, new payload ID={2}", _loggerPrefix, _lastPayloadId, id));
 
             if (id > _lastPayloadId + 1)
             {
-                _logger.WriteError(String.Format("{0}Missed message(s) from SQL Server. Expected payload ID {1} but got {2}.", _loggerPrefix, _lastPayloadId + 1, id));
+                _logger.LogError(String.Format("{0}Missed message(s) from SQL Server. Expected payload ID {1} but got {2}.", _loggerPrefix, _lastPayloadId + 1, id));
             }
             else if (id <= _lastPayloadId)
             {
-                _logger.WriteInformation(String.Format("{0}Duplicate message(s) or payload ID reset from SQL Server. Last payload ID {1}, this payload ID {2}", _loggerPrefix, _lastPayloadId, id));
+                _logger.LogInformation(String.Format("{0}Duplicate message(s) or payload ID reset from SQL Server. Last payload ID {1}, this payload ID {2}", _loggerPrefix, _lastPayloadId, id));
             }
 
             _lastPayloadId = id;
@@ -163,9 +163,9 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             // Update the Parameter with the new payload ID
             dbOperation.Parameters[0].Value = _lastPayloadId;
 
-            _logger.WriteVerbose(String.Format("{0}Updated receive reader initial payload ID parameter={1}", _loggerPrefix, _dbOperation.Parameters[0].Value));
+            _logger.LogVerbose(String.Format("{0}Updated receive reader initial payload ID parameter={1}", _loggerPrefix, _dbOperation.Parameters[0].Value));
 
-            _logger.WriteVerbose(String.Format("{0}Payload {1} containing {2} message(s) received", _loggerPrefix, id, message.Messages.Count));
+            _logger.LogVerbose(String.Format("{0}Payload {1} containing {2} message(s) received", _loggerPrefix, id, message.Messages.Count));
 
             Received((ulong)id, message);
         }

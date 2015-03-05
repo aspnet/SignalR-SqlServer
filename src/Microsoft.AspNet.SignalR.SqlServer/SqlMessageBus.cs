@@ -59,7 +59,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             _configuration = configuration;
             _dbProviderFactory = dbProviderFactory;
 
-            _logger = loggerFactory.Create<SqlMessageBus>();
+            _logger = loggerFactory.CreateLogger<SqlMessageBus>();
             ThreadPool.QueueUserWorkItem(Initialize);
         }
 
@@ -78,7 +78,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 
         protected override void Dispose(bool disposing)
         {
-            _logger.WriteInformation("SQL message bus disposing, disposing streams");
+            _logger.LogInformation("SQL message bus disposing, disposing streams");
 
             for (var i = 0; i < _streams.Count; i++)
             {
@@ -93,7 +93,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         private void Initialize(object state)
         {
             // NOTE: Called from a ThreadPool thread
-            _logger.WriteInformation(String.Format("SQL message bus initializing, TableCount={0}", _configuration.TableCount));
+            _logger.LogInformation(String.Format("SQL message bus initializing, TableCount={0}", _configuration.TableCount));
 
             while (true)
             {
@@ -111,7 +111,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
                         OnError(i, ex);
                     }
 
-                    _logger.WriteError("Error trying to install SQL server objects, trying again in 2 seconds: {0}", ex);
+                    _logger.LogError("Error trying to install SQL server objects, trying again in 2 seconds: {0}", ex);
 
                     // Try again in a little bit
                     Thread.Sleep(2000);
@@ -150,7 +150,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
                 {
                     OnError(streamIndex, ex);
 
-                    _logger.WriteWarning("Exception thrown by Task", ex);
+                    _logger.LogWarning("Exception thrown by Task", ex);
                     Thread.Sleep(2000);
                     StartReceiving(streamIndex);
                 }

@@ -129,7 +129,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 
                     if (retryDelay > 0)
                     {
-                        Logger.WriteVerbose(String.Format("{0}Waiting {1}ms before checking for messages again", LoggerPrefix, retryDelay));
+                        Logger.LogVerbose(String.Format("{0}Waiting {1}ms before checking for messages again", LoggerPrefix, retryDelay));
 
                         Thread.Sleep(retryDelay);
                     }
@@ -143,21 +143,21 @@ namespace Microsoft.AspNet.SignalR.SqlServer
                     }
                     catch (Exception ex)
                     {
-                        Logger.WriteError(String.Format("{0}Error in SQL receive loop: {1}", LoggerPrefix, ex));
+                        Logger.LogError(String.Format("{0}Error in SQL receive loop: {1}", LoggerPrefix, ex));
 
                         Faulted(ex);
                     }
 
                     if (recordCount > 0)
                     {
-                        Logger.WriteVerbose(String.Format("{0}{1} records received", LoggerPrefix, recordCount));
+                        Logger.LogVerbose(String.Format("{0}{1} records received", LoggerPrefix, recordCount));
 
                         // We got records so start the retry loop again
                         i = -1;
                         break;
                     }
 
-                    Logger.WriteVerbose("{0}No records received", LoggerPrefix);
+                    Logger.LogVerbose("{0}No records received", LoggerPrefix);
 
                     var isLastRetry = i == delays.Count - 1 && j == retryCount - 1;
 
@@ -175,7 +175,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
                             // No records after all retries, set up a SQL notification
                             try
                             {
-                                Logger.WriteVerbose("{0}Setting up SQL notification", LoggerPrefix);
+                                Logger.LogVerbose("{0}Setting up SQL notification", LoggerPrefix);
 
                                 recordCount = ExecuteReader(processRecord, command =>
                                 {
@@ -186,7 +186,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 
                                 if (recordCount > 0)
                                 {
-                                    Logger.WriteVerbose("{0}Records were returned by the command that sets up the SQL notification, restarting the receive loop", LoggerPrefix);
+                                    Logger.LogVerbose("{0}Records were returned by the command that sets up the SQL notification, restarting the receive loop", LoggerPrefix);
 
                                     i = -1;
                                     break; // break the inner for loop
@@ -198,7 +198,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 
                                     if (previousState == NotificationState.AwaitingNotification)
                                     {
-                                        Logger.WriteError("{0}A SQL notification was already running. Overlapping receive loops detected, this should never happen. BUG!", LoggerPrefix);
+                                        Logger.LogError("{0}A SQL notification was already running. Overlapping receive loops detected, this should never happen. BUG!", LoggerPrefix);
 
                                         return;
                                     }
@@ -207,7 +207,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
                                     {
                                         // Failed to change _notificationState from ProcessingUpdates to AwaitingNotification, it was already NotificationReceived
 
-                                        Logger.WriteVerbose("{0}The SQL notification fired before the receive loop returned, restarting the receive loop", LoggerPrefix);
+                                        Logger.LogVerbose("{0}The SQL notification fired before the receive loop returned, restarting the receive loop", LoggerPrefix);
 
                                         i = -1;
                                         break; // break the inner for loop
@@ -215,7 +215,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 
                                 }
 
-                                Logger.WriteVerbose("{0}No records received while setting up SQL notification", LoggerPrefix);
+                                Logger.LogVerbose("{0}No records received while setting up SQL notification", LoggerPrefix);
 
                                 // We're in a wait state for a notification now so check if we're disposing
                                 lock (_stopLocker)
@@ -228,7 +228,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
                             }
                             catch (Exception ex)
                             {
-                                Logger.WriteError(String.Format("{0}Error in SQL receive loop: {1}", LoggerPrefix, ex));
+                                Logger.LogError(String.Format("{0}Error in SQL receive loop: {1}", LoggerPrefix, ex));
                                 Faulted(ex);
 
                                 // Re-enter the loop on the last retry delay
@@ -236,7 +236,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 
                                 if (retryDelay > 0)
                                 {
-                                    Logger.WriteVerbose(String.Format("{0}Waiting {1}ms before checking for messages again", LoggerPrefix, retryDelay));
+                                    Logger.LogVerbose(String.Format("{0}Waiting {1}ms before checking for messages again", LoggerPrefix, retryDelay));
 
                                     Thread.Sleep(retryDelay);
                                 }
@@ -247,7 +247,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
                 }
             }
 
-            Logger.WriteVerbose("{0}Receive loop exiting", LoggerPrefix);
+            Logger.LogVerbose("{0}Receive loop exiting", LoggerPrefix);
         }
 
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Disposing")]
@@ -285,7 +285,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
          SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "sender", Justification = "Event handler")]
         protected virtual void SqlDependency_OnChange(SqlNotificationEventArgs e, Action<DbDataReader, DbOperation> processRecord)
         {
-            Logger.WriteInformation("{0}SQL notification change fired", LoggerPrefix);
+            Logger.LogInformation("{0}SQL notification change fired", LoggerPrefix);
 
             lock (_stopLocker)
             {
@@ -300,7 +300,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 
             if (previousState == NotificationState.NotificationReceived)
             {
-                Logger.WriteError("{0}Overlapping SQL change notifications received, this should never happen, BUG!", LoggerPrefix);
+                Logger.LogError("{0}Overlapping SQL change notifications received, this should never happen, BUG!", LoggerPrefix);
 
                 return;
             }
@@ -309,7 +309,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
                 // We're still in the original receive loop
 
                 // New updates will be retreived by the original reader thread
-                Logger.WriteVerbose("{0}Original reader processing is still in progress and will pick up the changes", LoggerPrefix);
+                Logger.LogVerbose("{0}Original reader processing is still in progress and will pick up the changes", LoggerPrefix);
 
                 return;
             }
@@ -321,15 +321,15 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             {
                 if (e.Info == SqlNotificationInfo.Update)
                 {
-                    Logger.WriteVerbose(string.Format("{0}SQL notification details: Type={1}, Source={2}, Info={3}", LoggerPrefix, e.Type, e.Source, e.Info));
+                    Logger.LogVerbose(string.Format("{0}SQL notification details: Type={1}, Source={2}, Info={3}", LoggerPrefix, e.Type, e.Source, e.Info));
                 }
                 else if (e.Source == SqlNotificationSource.Timeout)
                 {
-                    Logger.WriteVerbose("{0}SQL notification timed out", LoggerPrefix);
+                    Logger.LogVerbose("{0}SQL notification timed out", LoggerPrefix);
                 }
                 else
                 {
-                    Logger.WriteError(string.Format("{0}Unexpected SQL notification details: Type={1}, Source={2}, Info={3}", LoggerPrefix, e.Type, e.Source, e.Info));
+                    Logger.LogError(string.Format("{0}Unexpected SQL notification details: Type={1}, Source={2}, Info={3}", LoggerPrefix, e.Type, e.Source, e.Info));
 
                     Faulted(new SqlMessageBusException(String.Format(CultureInfo.InvariantCulture, Resources.Error_UnexpectedSqlNotificationType, e.Type, e.Source, e.Info)));
                 }
@@ -338,7 +338,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             {
                 Debug.Assert(e.Info != SqlNotificationInfo.Invalid, "Ensure the SQL query meets the requirements for query notifications at http://msdn.microsoft.com/en-US/library/ms181122.aspx");
 
-                Logger.WriteError(string.Format("{0}SQL notification subscription error: Type={1}, Source={2}, Info={3}", LoggerPrefix, e.Type, e.Source, e.Info));
+                Logger.LogError(string.Format("{0}SQL notification subscription error: Type={1}, Source={2}, Info={3}", LoggerPrefix, e.Type, e.Source, e.Info));
 
                 if (e.Info == SqlNotificationInfo.TemplateLimit)
                 {
@@ -381,29 +381,29 @@ namespace Microsoft.AspNet.SignalR.SqlServer
                 return false;
             }
 
-            Logger.WriteVerbose("{0}Starting SQL notification listener", LoggerPrefix);
+            Logger.LogVerbose("{0}Starting SQL notification listener", LoggerPrefix);
             try
             {
                 if (SqlDependency.Start(ConnectionString))
                 {
-                    Logger.WriteVerbose("{0}SQL notification listener started", LoggerPrefix);
+                    Logger.LogVerbose("{0}SQL notification listener started", LoggerPrefix);
                 }
                 else
                 {
-                    Logger.WriteVerbose("{0}SQL notification listener was already running", LoggerPrefix);
+                    Logger.LogVerbose("{0}SQL notification listener was already running", LoggerPrefix);
                 }
                 return true;
             }
             catch (InvalidOperationException)
             {
-                Logger.WriteInformation("{0}SQL Service Broker is disabled, disabling query notifications", LoggerPrefix);
+                Logger.LogInformation("{0}SQL Service Broker is disabled, disabling query notifications", LoggerPrefix);
 
                 _notificationState = NotificationState.Disabled;
                 return false;
             }
             catch (Exception ex)
             {
-                Logger.WriteError(String.Format("{0}Error starting SQL notification listener: {1}", LoggerPrefix, ex));
+                Logger.LogError(String.Format("{0}Error starting SQL notification listener: {1}", LoggerPrefix, ex));
 
                 return false;
             }
@@ -423,13 +423,13 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 #if ASPNET50
                 try
                 {
-                    Logger.WriteVerbose("{0}Stopping SQL notification listener", LoggerPrefix);
+                    Logger.LogVerbose("{0}Stopping SQL notification listener", LoggerPrefix);
                     SqlDependency.Stop(ConnectionString);
-                    Logger.WriteVerbose("{0}SQL notification listener stopped", LoggerPrefix);
+                    Logger.LogVerbose("{0}SQL notification listener stopped", LoggerPrefix);
                 }
                 catch (Exception stopEx)
                 {
-                    Logger.WriteError(String.Format("{0}Error occured while stopping SQL notification listener: {1}", LoggerPrefix, stopEx));
+                    Logger.LogError(String.Format("{0}Error occured while stopping SQL notification listener: {1}", LoggerPrefix, stopEx));
                 }
 #endif
             }

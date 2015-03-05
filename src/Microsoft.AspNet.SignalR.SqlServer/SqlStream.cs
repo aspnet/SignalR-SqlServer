@@ -48,14 +48,14 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 
         public Task Send(IList<Message> messages)
         {
-             _logger.WriteVerbose(String.Format("{0}Saving payload with {1} messages(s) to SQL server", _loggerPrefix, messages.Count, _streamIndex));
+             _logger.LogVerbose(String.Format("{0}Saving payload with {1} messages(s) to SQL server", _loggerPrefix, messages.Count, _streamIndex));
             
             return _sender.Send(messages);
         }
 
         public void Dispose()
         {
-            _logger.WriteInformation(String.Format("{0}Disposing stream {1}", _loggerPrefix, _streamIndex));
+            _logger.LogInformation(String.Format("{0}Disposing stream {1}", _loggerPrefix, _streamIndex));
 
             _receiver.Dispose();
         }

@@ -28,7 +28,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "Query doesn't come from user code")]
         public void Install()
         {
-            _logger.WriteInformation("Start installing SignalR SQL objects");
+            _logger.LogInformation("Start installing SignalR SQL objects");
 
             if (!IsSqlEditionSupported(_connectionString))
             {
@@ -46,7 +46,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             var operation = new DbOperation(_connectionString, script, _logger);
             operation.ExecuteNonQuery();
 
-            _logger.WriteInformation("SignalR SQL objects installed");
+            _logger.LogInformation("SignalR SQL objects installed");
         }
 
         private bool IsSqlEditionSupported(string connectionString)

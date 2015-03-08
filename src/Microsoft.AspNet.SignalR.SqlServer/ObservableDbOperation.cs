@@ -69,13 +69,13 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         {
             Faulted += _ => { };
             Queried += () => { };
-#if ASPNET50
+#if DNX451
             Changed += () => { };
 #endif
         }
 
         public event Action Queried;
-#if ASPNET50
+#if DNX451
         public event Action Changed;
 #endif
         public event Action<Exception> Faulted;
@@ -85,7 +85,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         /// </summary>
         [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "Needs refactoring"),
          SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Errors are reported via the callback")]
-#if ASPNET50
+#if DNX451
         public void ExecuteReaderWithUpdates(Action<IDataRecord, DbOperation> processRecord)
 #else
         public void ExecuteReaderWithUpdates(Action<DbDataReader, DbOperation> processRecord)
@@ -171,7 +171,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
                         }
                         else
                         {
-#if ASPNET50
+#if DNX451
                             // No records after all retries, set up a SQL notification
                             try
                             {
@@ -258,7 +258,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
                 _disposing = true;
             }
 
-#if ASPNET50
+#if DNX451
             if (_notificationState != NotificationState.Disabled)
             {
                 try
@@ -275,7 +275,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             _stopHandle.Dispose();
         }
 
-#if ASPNET50
+#if DNX451
         protected virtual void AddSqlDependency(IDbCommand command, Action<SqlNotificationEventArgs> callback)
         {
             command.AddSqlDependency(e => callback(e));
@@ -365,7 +365,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "I need to")]
         protected virtual bool StartSqlDependencyListener()
         {
-#if ASPNETCORE50
+#if DNXCORE50
             return false;
 #else
             lock (_stopLocker)
@@ -420,7 +420,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 
             if (_notificationState != NotificationState.Disabled)
             {
-#if ASPNET50
+#if DNX451
                 try
                 {
                     Logger.LogVerbose("{0}Stopping SQL notification listener", LoggerPrefix);
@@ -462,7 +462,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             get { return _updateLoopRetryDelays; }
         }
 
-#if ASPNET50
+#if DNX451
         void IDbBehavior.AddSqlDependency(IDbCommand command, Action<SqlNotificationEventArgs> callback)
         {
             AddSqlDependency(command, callback);

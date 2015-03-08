@@ -14,7 +14,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         bool StartSqlDependencyListener();
         IList<Tuple<int, int>> UpdateLoopRetryDelays { get; }
 
-#if ASPNET50
+#if DNX451
         void AddSqlDependency(IDbCommand command, Action<SqlNotificationEventArgs> callback);
 #endif
     }

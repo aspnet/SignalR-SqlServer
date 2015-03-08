@@ -6,7 +6,7 @@ using System;
 namespace Microsoft.AspNet.SignalR.SqlServer
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors", Justification="Should never have inner exceptions")]
-#if ASPNET50
+#if DNX451
     [Serializable]
 #endif
     public class SqlMessageBusException : Exception

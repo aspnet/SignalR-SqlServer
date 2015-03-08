@@ -1,4 +1,4 @@
-{
+﻿{
     "version": "3.0.0-*",
     "description": "Core server components for ASP.NET SignalR.",
     "dependencies": {
@@ -9,12 +9,12 @@
     },
     "resources": "install.sql;send.sql",
     "frameworks": {
-        "aspnet50": {
+        "dnx451": {
             "frameworkAssemblies": {
                 "System.Data": ""
             }
         },
-        "aspnetcore50": {
+        "dnxcore50": {
             "dependencies": {
                 "System.Data.Common": "4.0.0-*",
                 "System.Data.SqlClient": "4.0.0-*"

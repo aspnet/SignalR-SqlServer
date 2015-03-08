@@ -15,7 +15,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             _dbProviderFactory = dbProviderFactory;
         }
 
-#if ASPNET50
+#if DNX451
         public IDbConnection CreateConnection()
 #else
         public DbConnection CreateConnection()

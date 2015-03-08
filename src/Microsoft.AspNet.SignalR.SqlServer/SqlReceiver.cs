@@ -123,7 +123,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 
             _dbOperation.Queried += () => Queried();
             _dbOperation.Faulted += ex => Faulted(ex);
-#if ASPNET50
+#if DNX451
             _dbOperation.Changed += () =>
             {
                 _logger.LogInformation("{0}Starting receive loop again to process updates", _loggerPrefix);
@@ -138,7 +138,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
             _logger.LogInformation("{0}SqlReceiver.Receive returned", _loggerPrefix);
         }
 
-#if ASPNET50
+#if DNX451
         private void ProcessRecord(IDataRecord record, DbOperation dbOperation)
 #else
         private void ProcessRecord(DbDataReader record, DbOperation dbOperation)

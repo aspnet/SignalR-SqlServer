@@ -5,7 +5,7 @@ using System;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Messaging;
 using Microsoft.AspNet.SignalR.SqlServer;
-using Microsoft.Framework.ConfigurationModel;
+using Microsoft.Framework.Configuration;
 
 namespace Microsoft.Framework.DependencyInjection
 {

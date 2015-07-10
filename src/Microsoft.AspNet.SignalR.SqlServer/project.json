@@ -1,8 +1,8 @@
 {
-    "version": "3.0.0-*",
+    "version": "3.0.0-beta5",
     "description": "Core server components for ASP.NET SignalR.",
     "dependencies": {
-        "Microsoft.AspNet.SignalR.Server": "3.0.0-*"
+        "Microsoft.AspNet.SignalR.Server": "3.0.0-beta5"
     },
     "compilationOptions": {
         "warningsAsErrors": "true"

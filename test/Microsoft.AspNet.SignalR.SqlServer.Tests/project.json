@@ -1,7 +1,7 @@
 {
     "dependencies": {
-        "Microsoft.AspNet.SignalR.SqlServer": "3.0.0-*",
-        "xunit.runner.aspnet": "2.0.0-aspnet-*",
+        "Microsoft.AspNet.SignalR.SqlServer": "3.0.0-beta5",
+        "xunit.runner.aspnet": "2.0.0-aspnet-beta5",
         "Moq": "4.2.1312.1622"
     },
     "compilationOptions": {

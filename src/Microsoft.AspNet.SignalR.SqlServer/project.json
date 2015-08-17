@@ -16,7 +16,7 @@
         },
         "dnxcore50": {
             "dependencies": {
-                "System.Data.Common": "4.0.0-*",
+                "System.Data.Common": "4.0.1-beta-*",
                 "System.Data.SqlClient": "4.0.0-*"
             }
         }

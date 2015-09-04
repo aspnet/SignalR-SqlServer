@@ -54,7 +54,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
                                      IDbProviderFactory dbProviderFactory)
             : base(stringMinifier, loggerFactory, performanceCounterManager, optionsAccessor, scaleoutOptionsAccessor)
         {
-            var configuration = scaleoutOptionsAccessor.Options;
+            var configuration = scaleoutOptionsAccessor.Value;
             _connectionString = configuration.ConnectionString;
             _configuration = configuration;
             _dbProviderFactory = dbProviderFactory;

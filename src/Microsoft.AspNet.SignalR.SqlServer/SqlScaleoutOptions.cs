@@ -31,7 +31,7 @@ namespace Microsoft.AspNet.SignalR
             {
                 if (String.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException("connectionString");
+                    throw new ArgumentNullException(nameof(connectionString));
                 }
 
                 _connectionString = value;
@@ -53,7 +53,7 @@ namespace Microsoft.AspNet.SignalR
             {
                 if (value < 1)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
                 _tableCount = value;
             }

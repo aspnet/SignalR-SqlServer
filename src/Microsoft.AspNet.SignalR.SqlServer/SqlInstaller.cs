@@ -3,7 +3,7 @@
 
 using System;
 using System.Reflection;
-using Microsoft.Framework.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace Microsoft.AspNet.SignalR.SqlServer
 {

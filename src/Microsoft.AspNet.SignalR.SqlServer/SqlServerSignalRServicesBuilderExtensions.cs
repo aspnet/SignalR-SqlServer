@@ -5,9 +5,9 @@ using System;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Messaging;
 using Microsoft.AspNet.SignalR.SqlServer;
-using Microsoft.Framework.Configuration;
+using Microsoft.Extensions.Configuration;
 
-namespace Microsoft.Framework.DependencyInjection
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class SqlServerSignalRServicesBuilderExtensions
     {

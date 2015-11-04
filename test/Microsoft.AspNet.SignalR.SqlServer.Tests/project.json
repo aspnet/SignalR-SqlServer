@@ -5,7 +5,8 @@
         "Moq": "4.2.1312.1622"
     },
     "compilationOptions": {
-        "allowUnsafe": true
+        "allowUnsafe": true,
+        "keyFile": "../../tools/Key.snk"
     },
     "frameworks": {
         "dnx451": { }

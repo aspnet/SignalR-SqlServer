@@ -5,7 +5,8 @@
         "Microsoft.AspNet.SignalR.Server": "3.0.0-*"
     },
     "compilationOptions": {
-        "warningsAsErrors": true
+        "warningsAsErrors": true,
+        "keyFile": "../../tools/Key.snk"
     },
     "resources": "install.sql;send.sql",
     "frameworks": {

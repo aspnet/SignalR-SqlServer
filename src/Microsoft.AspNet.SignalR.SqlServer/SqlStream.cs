@@ -48,7 +48,7 @@ namespace Microsoft.AspNet.SignalR.SqlServer
 
         public Task Send(IList<Message> messages)
         {
-             _logger.LogVerbose(String.Format("{0}Saving payload with {1} messages(s) to SQL server", _loggerPrefix, messages.Count, _streamIndex));
+             _logger.LogDebug(String.Format("{0}Saving payload with {1} messages(s) to SQL server", _loggerPrefix, messages.Count, _streamIndex));
             
             return _sender.Send(messages);
         }

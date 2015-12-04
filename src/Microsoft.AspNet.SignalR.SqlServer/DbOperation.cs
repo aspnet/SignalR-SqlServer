@@ -147,9 +147,9 @@ namespace Microsoft.AspNet.SignalR.SqlServer
         private void LoggerCommand(DbCommand command)
 #endif
         {
-            if (Logger.IsEnabled(LogLevel.Verbose))
+            if (Logger.IsEnabled(LogLevel.Debug))
             {
-                Logger.LogVerbose(String.Format("Created DbCommand: CommandType={0}, CommandText={1}, Parameters={2}", command.CommandType, command.CommandText,
+                Logger.LogDebug(String.Format("Created DbCommand: CommandType={0}, CommandText={1}, Parameters={2}", command.CommandType, command.CommandText,
                     command.Parameters.Cast<DbParameter>()
                         .Aggregate(string.Empty, (msg, p) => string.Format(CultureInfo.InvariantCulture, "{0} [Name={1}, Value={2}]", msg, p.ParameterName, p.Value)))
                 );

@@ -1,25 +1,25 @@
 {
-    "version": "3.0.0-*",
-    "description": "Core server components for ASP.NET SignalR.",
-    "dependencies": {
-        "Microsoft.AspNet.SignalR.Server": "3.0.0-*"
+  "version": "3.0.0-*",
+  "description": "Core server components for ASP.NET SignalR.",
+  "dependencies": {
+    "Microsoft.AspNet.SignalR.Server": "3.0.0-*",
+    "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0-*"
+  },
+  "compilationOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../tools/Key.snk"
+  },
+  "resources": "install.sql;send.sql",
+  "frameworks": {
+    "dnx451": {
+      "frameworkAssemblies": {
+        "System.Data": ""
+      }
     },
-    "compilationOptions": {
-        "warningsAsErrors": true,
-        "keyFile": "../../tools/Key.snk"
-    },
-    "resources": "install.sql;send.sql",
-    "frameworks": {
-        "dnx451": {
-            "frameworkAssemblies": {
-                "System.Data": ""
-            }
-        },
-        "dnxcore50": {
-            "dependencies": {
-                "System.Data.Common": "4.0.1-*",
-                "System.Data.SqlClient": "4.0.0-*"
-            }
-        }
+    "dnxcore50": {
+      "dependencies": {
+        "System.Data.SqlClient": "4.0.0-*"
+      }
     }
+  }
 }

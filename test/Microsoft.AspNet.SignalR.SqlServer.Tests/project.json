@@ -1,17 +1,18 @@
 {
-    "dependencies": {
-        "Microsoft.AspNet.SignalR.SqlServer": "3.0.0-*",
-        "xunit.runner.aspnet": "2.0.0-aspnet-*",
-        "Moq": "4.2.1312.1622"
-    },
-    "compilationOptions": {
-        "allowUnsafe": true,
-        "keyFile": "../../tools/Key.snk"
-    },
-    "frameworks": {
-        "dnx451": { }
-    },
-    "commands": {
-        "test": "xunit.runner.aspnet"
-    }
+  "dependencies": {
+    "Microsoft.AspNet.SignalR.SqlServer": "3.0.0-*",
+    "xunit.runner.aspnet": "2.0.0-aspnet-*",
+    "Moq": "4.2.1312.1622"
+  },
+  "compilationOptions": {
+    "allowUnsafe": true,
+    "keyFile": "../../tools/Key.snk",
+    "warningsAsErrors": true
+  },
+  "frameworks": {
+    "dnx451": { }
+  },
+  "commands": {
+    "test": "xunit.runner.aspnet"
+  }
 }

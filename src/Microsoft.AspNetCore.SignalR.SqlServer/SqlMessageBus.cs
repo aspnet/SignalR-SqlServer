@@ -150,7 +150,7 @@ namespace Microsoft.AspNetCore.SignalR.SqlServer
                 {
                     OnError(streamIndex, ex);
 
-                    _logger.LogWarning("Exception thrown by Task", ex);
+                    _logger.LogWarning(0, ex, "Exception thrown by Task");
                     Thread.Sleep(2000);
                     StartReceiving(streamIndex);
                 }

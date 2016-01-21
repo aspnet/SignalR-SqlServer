@@ -175,7 +175,7 @@ namespace Microsoft.AspNetCore.SignalR.SqlServer
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogWarning("Exception thrown by Task", ex);
+                    Logger.LogWarning(0, ex, "Exception thrown by Task");
                     throw;
                 }
             }

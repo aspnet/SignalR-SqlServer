@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "Microsoft.AspNetCore.SignalR.SqlServer": "3.0.0-*",
+    "Microsoft.AspNetCore.SignalR.SqlServer": "0.1.0-*",
     "xunit.runner.aspnet": "2.0.0-aspnet-*",
     "Moq": "4.2.1312.1622"
   },
@@ -10,7 +10,7 @@
     "warningsAsErrors": true
   },
   "frameworks": {
-    "dnx451": { }
+    "dnx451": {}
   },
   "commands": {
     "test": "xunit.runner.aspnet"

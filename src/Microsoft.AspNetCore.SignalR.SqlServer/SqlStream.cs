@@ -5,10 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Messaging;
+using Microsoft.AspNetCore.SignalR.Messaging;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.AspNet.SignalR.SqlServer
+namespace Microsoft.AspNetCore.SignalR.SqlServer
 {
     internal class SqlStream : IDisposable
     {

@@ -5,7 +5,7 @@ using System;
 using System.Reflection;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.AspNet.SignalR.SqlServer
+namespace Microsoft.AspNetCore.SignalR.SqlServer
 {
     internal class SqlInstaller
     {

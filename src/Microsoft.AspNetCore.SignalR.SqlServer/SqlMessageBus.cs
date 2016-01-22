@@ -8,12 +8,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Messaging;
-using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Messaging;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Microsoft.AspNet.SignalR.SqlServer
+namespace Microsoft.AspNetCore.SignalR.SqlServer
 {
     /// <summary>
     /// Uses SQL Server tables to scale-out SignalR applications in web farms.

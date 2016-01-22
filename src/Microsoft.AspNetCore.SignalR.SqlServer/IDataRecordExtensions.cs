@@ -6,7 +6,7 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Microsoft.AspNet.SignalR.SqlServer
+namespace Microsoft.AspNetCore.SignalR.SqlServer
 {
     internal static class IDataRecordExtensions
     {

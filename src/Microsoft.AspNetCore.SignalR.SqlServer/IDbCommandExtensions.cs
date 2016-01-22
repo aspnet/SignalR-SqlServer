@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 
 
-namespace Microsoft.AspNet.SignalR.SqlServer
+namespace Microsoft.AspNetCore.SignalR.SqlServer
 {
     internal static class IDbCommandExtensions
     {

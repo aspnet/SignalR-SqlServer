@@ -6,7 +6,7 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using JetBrains.Annotations;
 
-namespace Microsoft.AspNet.SignalR.SqlServer
+namespace Microsoft.AspNetCore.SignalR.SqlServer
 {
     internal static class DbDataReaderExtensions
     {

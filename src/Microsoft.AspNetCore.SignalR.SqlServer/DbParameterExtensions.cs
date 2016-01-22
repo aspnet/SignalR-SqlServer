@@ -3,7 +3,7 @@
 
 using System.Data.Common;
 
-namespace Microsoft.AspNet.SignalR.SqlServer
+namespace Microsoft.AspNetCore.SignalR.SqlServer
 {
     internal static class DbParameterExtensions
     {

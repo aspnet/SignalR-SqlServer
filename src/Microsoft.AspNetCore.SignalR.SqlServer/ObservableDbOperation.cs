@@ -12,7 +12,7 @@ using System.Globalization;
 using System.Threading;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.AspNet.SignalR.SqlServer
+namespace Microsoft.AspNetCore.SignalR.SqlServer
 {
     /// <summary>
     /// A DbOperation that continues to execute over and over as new results arrive.

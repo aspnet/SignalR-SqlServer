@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "Microsoft.AspNet.SignalR.SqlServer": "3.0.0-*",
+    "Microsoft.AspNetCore.SignalR.SqlServer": "3.0.0-*",
     "xunit.runner.aspnet": "2.0.0-aspnet-*",
     "Moq": "4.2.1312.1622"
   },

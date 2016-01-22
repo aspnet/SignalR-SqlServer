@@ -4,7 +4,7 @@
 using System;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.SqlServer.Tests
+namespace Microsoft.AspNetCore.SignalR.SqlServer.Tests
 {
     public class SqlScaleoutConfigurationFacts
     {

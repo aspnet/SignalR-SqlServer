@@ -7,10 +7,10 @@ using System.Data;
 using System.Globalization;
 using System.Reflection;
 using System.Threading.Tasks;
-using Microsoft.AspNet.SignalR.Messaging;
+using Microsoft.AspNetCore.SignalR.Messaging;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.AspNet.SignalR.SqlServer
+namespace Microsoft.AspNetCore.SignalR.SqlServer
 {
     internal class SqlSender
     {

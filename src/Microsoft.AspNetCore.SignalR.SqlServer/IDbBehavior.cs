@@ -7,7 +7,7 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 
-namespace Microsoft.AspNet.SignalR.SqlServer
+namespace Microsoft.AspNetCore.SignalR.SqlServer
 {
     public interface IDbBehavior
     {

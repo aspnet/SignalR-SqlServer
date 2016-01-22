@@ -4,7 +4,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace Microsoft.AspNet.SignalR
+namespace Microsoft.AspNetCore.SignalR
 {
     internal static class AssemblyExtensions
     {

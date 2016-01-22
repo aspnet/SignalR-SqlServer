@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using JetBrains.Annotations;
-using Microsoft.AspNet.SignalR.Messaging;
+using Microsoft.AspNetCore.SignalR.Messaging;
 
-namespace Microsoft.AspNet.SignalR.SqlServer
+namespace Microsoft.AspNetCore.SignalR.SqlServer
 {
     public static class SqlPayload
     {

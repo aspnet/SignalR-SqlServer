@@ -4,7 +4,7 @@
 using System.Data;
 using System.Data.Common;
 
-namespace Microsoft.AspNet.SignalR.SqlServer
+namespace Microsoft.AspNetCore.SignalR.SqlServer
 {
     internal class DbProviderFactoryAdapter : IDbProviderFactory
     {

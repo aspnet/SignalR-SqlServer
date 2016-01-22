@@ -8,12 +8,12 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
-using Microsoft.AspNet.SignalR.SqlServer;
+using Microsoft.AspNetCore.SignalR.SqlServer;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;
 
-namespace Microsoft.AspNet.SignalR.Tests.SqlServer
+namespace Microsoft.AspNetCore.SignalR.Tests.SqlServer
 {
     public class ObservableSqlOperationFacts
     {

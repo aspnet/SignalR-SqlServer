@@ -12,6 +12,5 @@
   },
   "frameworks": {
     "dnx451": {}
-  },
-  "testRunner": "xunit"
+  }
 }

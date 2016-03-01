@@ -365,7 +365,7 @@ namespace Microsoft.AspNetCore.SignalR.SqlServer
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "I need to")]
         protected virtual bool StartSqlDependencyListener()
         {
-#if DNXCORE50
+#if NETSTANDARDAPP1_5
             return false;
 #else
             lock (_stopLocker)

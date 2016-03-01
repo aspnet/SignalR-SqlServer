@@ -16,11 +16,14 @@
         "System.Data": ""
       }
     },
-    "dnxcore50": {
+    "netstandardapp1.5": {
       "dependencies": {
         "System.Data.SqlClient": "4.0.0-*",
         "System.Runtime": "4.1.0-*"
-      }
+      },
+      "imports": [
+        "dnxcore50"
+      ]
     }
   }
 }

@@ -15,7 +15,7 @@ namespace Microsoft.AspNetCore.SignalR.SqlServer
     {
         private readonly static TimeSpan _dependencyTimeout = TimeSpan.FromSeconds(60);
 
-#if DNX451
+#if NET451
         public static void AddSqlDependency([NotNull]this IDbCommand command, Action<SqlNotificationEventArgs> callback)
         {
             var sqlCommand = command as SqlCommand;
@@ -29,7 +29,7 @@ namespace Microsoft.AspNetCore.SignalR.SqlServer
         }
 #endif
 
-#if DNX451
+#if NET451
         public static Task<int> ExecuteNonQueryAsync(this IDbCommand command)
 #else
         public static Task<int> ExecuteNonQueryAsync(this DbCommand command)
@@ -39,7 +39,7 @@ namespace Microsoft.AspNetCore.SignalR.SqlServer
 
             if (sqlCommand != null)
             {
-#if DNX451
+#if NET451
                 return Task.Factory.FromAsync(
                     (cb, state) => sqlCommand.BeginExecuteNonQuery(cb, state),
                     iar => sqlCommand.EndExecuteNonQuery(iar),

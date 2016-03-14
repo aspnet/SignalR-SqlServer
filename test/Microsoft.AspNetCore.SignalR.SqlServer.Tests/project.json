@@ -2,7 +2,7 @@
   "dependencies": {
     "Microsoft.AspNetCore.SignalR.SqlServer": "0.1.0-*",
     "Microsoft.NETCore.Platforms": "1.0.1-*",
-    "xunit.runner.aspnet": "2.0.0-aspnet-*",
+    "xunit": "2.1.0",
     "Moq": "4.2.1312.1622"
   },
   "compilationOptions": {
@@ -11,6 +11,10 @@
     "warningsAsErrors": true
   },
   "frameworks": {
-    "dnx451": {}
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Threading.Tasks": ""
+      }
+    }
   }
 }

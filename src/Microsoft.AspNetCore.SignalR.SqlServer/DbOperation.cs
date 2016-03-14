@@ -70,7 +70,7 @@ namespace Microsoft.AspNetCore.SignalR.SqlServer
             return Execute(cmd => cmd.ExecuteNonQueryAsync());
         }
 
-#if DNX451
+#if NET451
         public virtual int ExecuteReader(Action<IDataRecord, DbOperation> processRecord)
 #else
         public virtual int ExecuteReader(Action<DbDataReader, DbOperation> processRecord)
@@ -79,7 +79,7 @@ namespace Microsoft.AspNetCore.SignalR.SqlServer
             return ExecuteReader(processRecord, null);
         }
 
-#if DNX451
+#if NET451
         protected virtual int ExecuteReader(Action<IDataRecord, DbOperation> processRecord, Action<IDbCommand> commandAction)
 #else
         protected virtual int ExecuteReader(Action<DbDataReader, DbOperation> processRecord, Action<DbCommand> commandAction)
@@ -105,7 +105,7 @@ namespace Microsoft.AspNetCore.SignalR.SqlServer
             });
         }
 
-#if DNX451
+#if NET451
         protected virtual IDbCommand CreateCommand(IDbConnection connection)
 #else
         protected virtual DbCommand CreateCommand(DbConnection connection)
@@ -125,7 +125,7 @@ namespace Microsoft.AspNetCore.SignalR.SqlServer
             return command;
         }
 
-#if DNX451
+#if NET451
         private T Execute<T>(Func<IDbCommand, T> commandFunc)
 #else
         private T Execute<T>(Func<DbCommand, T> commandFunc)
@@ -141,7 +141,7 @@ namespace Microsoft.AspNetCore.SignalR.SqlServer
             }
         }
 
-#if DNX451
+#if NET451
         private void LoggerCommand(IDbCommand command)
 #else
         private void LoggerCommand(DbCommand command)
@@ -156,7 +156,7 @@ namespace Microsoft.AspNetCore.SignalR.SqlServer
             }
         }
 
-#if DNX451
+#if NET451
         private async Task<T> Execute<T>(Func<IDbCommand, Task<T>> commandFunc)
 #else
         private async Task<T> Execute<T>(Func<DbCommand, Task<T>> commandFunc)

@@ -8,7 +8,7 @@ namespace Microsoft.AspNetCore.SignalR.SqlServer
 {
     public interface IDbProviderFactory
     {
-#if DNX451
+#if NET451
         IDbConnection CreateConnection();
 #else
         DbConnection CreateConnection();

@@ -11,18 +11,19 @@
   },
   "resources": "install.sql;send.sql",
   "frameworks": {
-    "dnx451": {
+    "net451": {
       "frameworkAssemblies": {
         "System.Data": ""
       }
     },
-    "netstandardapp1.5": {
+    "netstandard1.3": {
       "dependencies": {
         "System.Data.SqlClient": "4.0.0-*",
         "System.Runtime": "4.1.0-*"
       },
       "imports": [
-        "dnxcore50"
+        "dotnet5.4",
+        "portable-net451+win8"
       ]
     }
   }

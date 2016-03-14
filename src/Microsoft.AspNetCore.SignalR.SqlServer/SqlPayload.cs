@@ -18,7 +18,7 @@ namespace Microsoft.AspNetCore.SignalR.SqlServer
             return message.ToBytes();
         }
 
-#if DNX451
+#if NET451
         public static ScaleoutMessage FromBytes(IDataRecord record)
 #else
         public static ScaleoutMessage FromBytes(DbDataReader record)

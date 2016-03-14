@@ -14,7 +14,7 @@ namespace Microsoft.AspNetCore.SignalR.SqlServer
         bool StartSqlDependencyListener();
         IList<Tuple<int, int>> UpdateLoopRetryDelays { get; }
 
-#if DNX451
+#if NET451
         void AddSqlDependency(IDbCommand command, Action<SqlNotificationEventArgs> callback);
 #endif
     }

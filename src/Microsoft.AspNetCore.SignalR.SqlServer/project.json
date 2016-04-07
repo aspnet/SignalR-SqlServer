@@ -21,7 +21,6 @@
         "System.Data.SqlClient": "4.1.0-*"
       },
       "imports": [
-        "dotnet5.6",
         "portable-net451+win8"
       ]
     }

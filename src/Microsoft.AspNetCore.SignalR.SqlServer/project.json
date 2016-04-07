@@ -18,8 +18,7 @@
     },
     "netstandard1.5": {
       "dependencies": {
-        "System.Data.SqlClient": "4.0.0-*",
-        "System.Runtime": "4.1.0-*"
+        "System.Data.SqlClient": "4.1.0-*"
       },
       "imports": [
         "dotnet5.6",

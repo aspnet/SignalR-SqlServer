@@ -5,7 +5,7 @@
     "xunit": "2.1.0",
     "Moq": "4.2.1312.1622"
   },
-  "compilationOptions": {
+  "buildOptions": {
     "allowUnsafe": true,
     "keyFile": "../../tools/Key.snk",
     "warningsAsErrors": true

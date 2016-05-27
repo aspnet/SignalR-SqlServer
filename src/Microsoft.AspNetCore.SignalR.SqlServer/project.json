@@ -16,7 +16,7 @@
         "System.Data": ""
       }
     },
-    "netstandard1.5": {
+    "netstandard1.6": {
       "dependencies": {
         "System.Data.SqlClient": "4.1.0-*"
       },

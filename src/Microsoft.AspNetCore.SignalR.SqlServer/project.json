@@ -3,8 +3,7 @@
   "description": "Core server components for ASP.NET SignalR.",
   "dependencies": {
     "Microsoft.AspNetCore.SignalR.Server": "0.2.0-*",
-    "Microsoft.Extensions.Options.ConfigurationExtensions": "1.1.0-*",
-    "NETStandard.Library": "1.6.1-*"
+    "Microsoft.Extensions.Options.ConfigurationExtensions": "1.1.0-*"
   },
   "buildOptions": {
     "warningsAsErrors": true,
@@ -19,7 +18,7 @@
     },
     "netstandard1.6": {
       "dependencies": {
-        "System.Data.SqlClient": "4.3.0-*"
+        "System.Data.SqlClient": "4.1.0-*"
       }
     }
   }

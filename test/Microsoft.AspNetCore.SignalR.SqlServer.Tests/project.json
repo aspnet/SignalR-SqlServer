@@ -1,8 +1,8 @@
 {
   "dependencies": {
-    "Microsoft.AspNetCore.SignalR.SqlServer": "0.2.0-*",
+    "Microsoft.AspNetCore.SignalR.SqlServer": "0.2.0-rtm-22752",
     "Moq": "4.6.36-*",
-    "NETStandard.Library": "1.6.1-*",
+    "NETStandard.Library": "1.6.1",
     "xunit": "2.2.0-*"
   },
   "buildOptions": {
